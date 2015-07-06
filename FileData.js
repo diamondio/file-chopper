@@ -44,7 +44,14 @@ FileData.prototype.setBlocks = function(cb) {
 }
 
 exports.fromBuffer = function(buf, cb) {
-  return new FileData({
+  new FileData({
     'contents': buf,
   }).setBlocks(cb);
+}
+
+exports.fromPath = function(path, cb) {
+  fs.readFile(path, function(err, data) {
+    if (err) return cb(err);
+    exports.fromBuffer(data, cb);
+  });
 }
