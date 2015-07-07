@@ -26,16 +26,12 @@ FileData.prototype.setBlocks = function(cb) {
   var populate = function(fd, buf) {
     // console.log(buf.length);
     if (buf.length < BYTES_IN_MB) {
-      block.fromBuffer(buf, function(err, new_block) {
-        if (err) cb(err);
-        cb(null, thisFd.appendBlock(new_block));
-      });
+      var new_block = block.fromBuffer(buf);
+      cb(null, thisFd.appendBlock(new_block));
     } else {
-      block.fromBuffer(buf.slice(0, BYTES_IN_MB), function(err, new_block) {
-        if (err) cb(err);
-        thisFd.appendBlock(new_block);
-        return populate(thisFd, buf.slice(BYTES_IN_MB));
-      });
+      var new_block = block.fromBuffer(buf.slice(0, BYTES_IN_MB));
+      thisFd.appendBlock(new_block);
+      return populate(thisFd, buf.slice(BYTES_IN_MB));
     }
   }
 

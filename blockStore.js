@@ -15,12 +15,10 @@ exports.upload = function(block, cb) {
 }
 
 exports.uploadBuffer = function(buf, cb) {
-  Block.fromBuffer(buf, function(err, block) {
+  var block = Block.fromBuffer(buf);
+  exports.upload(block, function(err) {
     if (err) return cb(err);
-    exports.upload(block, function(err) {
-      if (err) return cb(err);
-      cb(null, block.hash);
-    });
+    cb(null, block.hash);
   });
 }
 

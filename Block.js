@@ -11,11 +11,10 @@ function Block(init) {
 }
 
 exports.fromBuffer = function(buf, cb) {
-  // in case md5 needs to be done in a separate process
-  cb(null, new Block({
+  return new Block({
     'contents': buf,
     'hash': md5(buf),
-  }));
+  });
 }
 
 exports.Block = Block;
