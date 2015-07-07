@@ -34,6 +34,7 @@ exports.fetch = function(hash, cb) {
       'hash': hash,
       'contents': data.Body
     }));
+  });
 }
 
 s3.listBuckets(function(err, data) {
