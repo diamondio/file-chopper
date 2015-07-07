@@ -13,3 +13,5 @@ exports.fromBuffer = function(buf, cb) {
     'hash': md5(buf),
   }));
 }
+
+exports.Block = Block;

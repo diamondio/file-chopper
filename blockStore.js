@@ -1,5 +1,5 @@
 var aws = require('aws-sdk');
-var Block = require('./Block').Block;
+var Block = require('./Block');
 
 var s3 = new aws.S3();
 
@@ -10,7 +10,17 @@ exports.upload = function(block, cb) {
     'Body': block.contents
   }, function(err) {
     if (err) return cb(err);
-    return cb(null, null);
+    return cb(null);
+  });
+}
+
+exports.uploadBuffer = function(buf, cb) {
+  Block.fromBuffer(buf, function(err, block) {
+    if (err) return cb(err);
+    exports.upload(block, function(err) {
+      if (err) return cb(err);
+      cb(null, block.hash);
+    });
   });
 }
 
@@ -20,7 +30,7 @@ exports.fetch = function(hash, cb) {
     'Key': thisBlock.hash,
   }, function(err, data) {
     if (err) return cb(err);
-    cb(null, new Block({
+    cb(null, new Block.Block({
       'hash': hash,
       'contents': data.Body
     }));
