@@ -1,7 +1,7 @@
 var md5 = require('MD5');
 
 function Block(init) {
-  this.init = init || {};
+  init = init || {};
   this.hash = init.hash;
   this.contents = init.contents;
 }
