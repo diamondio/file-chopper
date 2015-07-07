@@ -1,4 +1,8 @@
-var md5 = require('MD5');
+var crypto = require('crypto');
+
+function md5(buf) {
+  return crypto.createHash('md5').update(buf).digest("hex");
+}
 
 function Block(init) {
   init = init || {};
