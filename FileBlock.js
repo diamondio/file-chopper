@@ -4,17 +4,17 @@ function md5(buf) {
   return crypto.createHash('md5').update(buf).digest("hex");
 }
 
-function Block(init) {
+function FileBlock(init) {
   init = init || {};
   this.hash = init.hash;
   this.contents = init.contents;
 }
 
-exports.fromBuffer = function(buf, cb) {
-  return new Block({
+FileBlock.fromBuffer = function(buf, cb) {
+  return new FileBlock({
     'contents': buf,
     'hash': md5(buf),
   });
 }
 
-exports.Block = Block;
+exports = FileBlock;
