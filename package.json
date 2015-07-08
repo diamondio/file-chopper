@@ -16,5 +16,8 @@
   "bugs": {
     "url": "https://github.com/diamondio/file-chopper/issues"
   },
-  "homepage": "https://github.com/diamondio/file-chopper"
+  "homepage": "https://github.com/diamondio/file-chopper",
+  "dependencies": {
+    "aws-sdk": "^2.1.37"
+  }
 }
