@@ -7,6 +7,7 @@ function FileData(init) {
   this.blocks = init.blocks || [];
   this.contents = init.contents;
 }
+exports.FileData = FileData;
 
 FileData.prototype.appendBlock = function(block_hash) {
   this.blocks.push(block_hash);
