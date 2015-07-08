@@ -1,0 +1,20 @@
+{
+  "name": "file-chopper",
+  "version": "1.0.0",
+  "description": "",
+  "main": "Block.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "private": true,
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/diamondio/file-chopper.git"
+  },
+  "author": "Diamond",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/diamondio/file-chopper/issues"
+  },
+  "homepage": "https://github.com/diamondio/file-chopper"
+}
