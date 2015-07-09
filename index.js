@@ -2,12 +2,12 @@ var fs = require('fs');
 var aws = require('aws-sdk');
 
 var FileBlock = require('./FileBlock');
-var fileData = require('./FileData');
+var FileData = require('./FileData');
 
 var s3 = new aws.S3();
 
 exports.fromBuffer = function(buf, cb) {
-  new FileData({
+  new FileData.FileData({
     'contents': buf,
   }).setBlocks(cb);
 }
@@ -44,7 +44,7 @@ exports.fetch = function(hash, cb) {
     'Key': thisBlock.hash,
   }, function(err, data) {
     if (err) return cb(err);
-    cb(null, new FileBlock({
+    cb(null, new FileBlock.FileBlock({
       'hash': hash,
       'contents': data.Body
     }));

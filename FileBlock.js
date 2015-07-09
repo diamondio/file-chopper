@@ -10,11 +10,11 @@ function FileBlock(init) {
   this.contents = init.contents;
 }
 
-FileBlock.fromBuffer = function(buf, cb) {
+exports.fromBuffer = function(buf, cb) {
   return new FileBlock({
     'contents': buf,
     'hash': md5(buf),
   });
 }
 
-exports = FileBlock;
+exports.FileBlock = FileBlock;
