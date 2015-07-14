@@ -1,5 +1,9 @@
 var crypto = require('crypto');
 
+/*
+Wrapper around a Buffer which allows you to caclulate md5 hash
+*/
+
 function md5(buf) {
   return crypto.createHash('md5').update(buf).digest("hex");
 }

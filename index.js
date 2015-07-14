@@ -19,7 +19,9 @@ exports.fromPath = function(path, cb) {
   });
 }
 
-exports.upload = function(block, cb) {
+exports.uploadBuffer = function(buf, cb) {
+  var block = FileBlock.fromBuffer(buf);
+
   s3.upload({
     'Bucket': 'baynet-blocks',
     'Key': block.hash,
@@ -30,24 +32,13 @@ exports.upload = function(block, cb) {
   });
 }
 
-exports.uploadBuffer = function(buf, cb) {
-  var block = FileBlock.fromBuffer(buf);
-  exports.upload(block, function(err) {
-    if (err) return cb(err);
-    cb(null, block.hash);
-  });
-}
-
-exports.fetch = function(hash, cb) {
+exports.fetchBuffer = function(hash, cb) {
   s3.getObject({
     'Bucket': 'baynet-blocks',
-    'Key': thisBlock.hash,
+    'Key': hash,
   }, function(err, data) {
     if (err) return cb(err);
-    cb(null, new FileBlock.FileBlock({
-      'hash': hash,
-      'contents': data.Body
-    }));
+    cb(null, data.Body);
   });
 }
 
