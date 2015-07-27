@@ -21,20 +21,20 @@ FileData.prototype.getBlockHashes = function() {
 }
 
 FileData.prototype.setBlocks = function(cb) {
-  var thisFd = this;
+  var self = this;
 
   var populate = function(fd, buf) {
     // console.log(buf.length);
     if (buf.length < BYTES_IN_MB) {
       var new_block = FileBlock.fromBuffer(buf);
-      cb(null, thisFd.appendBlock(new_block));
+      cb(null, self.appendBlock(new_block));
     } else {
       var new_block = FileBlock.fromBuffer(buf.slice(0, BYTES_IN_MB));
-      thisFd.appendBlock(new_block);
-      return populate(thisFd, buf.slice(BYTES_IN_MB));
+      self.appendBlock(new_block);
+      return populate(self, buf.slice(BYTES_IN_MB));
     }
   }
 
-  return populate(thisFd, thisFd.contents);
+  return populate(self, self.contents);
 
 }

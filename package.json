@@ -18,6 +18,7 @@
   },
   "homepage": "https://github.com/diamondio/file-chopper",
   "dependencies": {
+    "async": "^1.4.0",
     "aws-sdk": "^2.1.37"
   }
 }

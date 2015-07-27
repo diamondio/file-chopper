@@ -1,5 +1,6 @@
 var fs = require('fs');
 var aws = require('aws-sdk');
+var async = require('async');
 
 var FileBlock = require('./FileBlock');
 var FileData = require('./FileData');
@@ -32,6 +33,17 @@ exports.uploadBuffer = function(buf, cb) {
   });
 }
 
+exports.uploadFile = function(filename, buf, cb) {
+  s3.upload({
+    'Bucket': 'baynet-filestore',
+    'Key': filename,
+    'Body': buf
+  }, function(err) {
+    if (err) return cb(err);
+    return cb(null);
+  });
+}
+
 exports.fetchBuffer = function(hash, cb) {
   s3.getObject({
     'Bucket': 'baynet-blocks',
@@ -39,6 +51,13 @@ exports.fetchBuffer = function(hash, cb) {
   }, function(err, data) {
     if (err) return cb(err);
     cb(null, data.Body);
+  });
+}
+
+exports.fetchBuffers = function(hashes, cb) {
+  async.map(hashes, exports.fetchBuffer, function(err, res) {
+    if (err) return cb(err);
+    return cb(null, Buffer.concat(res));
   });
 }
 
