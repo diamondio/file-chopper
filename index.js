@@ -4,6 +4,7 @@ var async = require('async');
 
 var FileBlock = require('./FileBlock');
 var FileData = require('./FileData');
+var config = require('./config');
 
 var s3 = new aws.S3();
 
@@ -24,7 +25,7 @@ exports.uploadBuffer = function(buf, cb) {
   var block = FileBlock.fromBuffer(buf);
 
   s3.upload({
-    'Bucket': 'baynet-blocks',
+    'Bucket': config.BLOCKSTORE_BUCKET_NAME,
     'Key': block.hash,
     'Body': block.contents
   }, function(err) {
@@ -35,7 +36,7 @@ exports.uploadBuffer = function(buf, cb) {
 
 exports.uploadFile = function(filename, buf, cb) {
   s3.upload({
-    'Bucket': 'baynet-filestore',
+    'Bucket': config.FILESTORE_BUCKET_NAME,
     'Key': filename,
     'Body': buf
   }, function(err) {
@@ -46,7 +47,7 @@ exports.uploadFile = function(filename, buf, cb) {
 
 exports.fetchBuffer = function(hash, cb) {
   s3.getObject({
-    'Bucket': 'baynet-blocks',
+    'Bucket': config.BLOCKSTORE_BUCKET_NAME,
     'Key': hash,
   }, function(err, data) {
     if (err) return cb(err);
@@ -69,11 +70,11 @@ exports.test = function (cb) {
     else {
       for (var index in data.Buckets) {
         var bucket = data.Buckets[index];
-        if (bucket.Name === 'baynet-blocks') {
+        if (bucket.Name === config.BLOCKSTORE_BUCKET_NAME) {
           return console.log('s3 ok');
         }
       }
-      throw 'unable to find bucket baynet-blocks';
+      throw 'unable to find config.BLOCKSTORE_BUCKET_NAME' + config.BLOCKSTORE_BUCKET_NAME;
     }
   });
 }
